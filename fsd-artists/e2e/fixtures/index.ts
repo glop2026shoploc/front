@@ -1,10 +1,8 @@
 import { test as base, expect } from "@playwright/test";
-import { ArtistsPage } from "../page-objects/artists.page";
-import { ArtistDetailPage } from "../page-objects/artist-detail.page";
+import { CatalogueTestPage } from "../page-objects/catalogue-test.page";
 
 type Fixtures = {
-    artistsPage: ArtistsPage;
-    artistDetailPage: ArtistDetailPage;
+    catalogueTestPage: CatalogueTestPage;
 };
 
 export const test = base.extend<Fixtures>({
@@ -12,8 +10,7 @@ export const test = base.extend<Fixtures>({
         await page.route("https://picsum.photos/**", (route) => route.abort());
         await use(page);
     },
-    artistsPage: async ({ page }, use) => use(new ArtistsPage(page)),
-    artistDetailPage: async ({ page }, use) => use(new ArtistDetailPage(page)),
+    catalogueTestPage: async ({ page }, use) => use(new CatalogueTestPage(page)),
 });
 
 export { expect };

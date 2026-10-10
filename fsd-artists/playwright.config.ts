@@ -16,9 +16,19 @@ export default defineConfig({
         { name: "firefox", use: { ...devices["Desktop Firefox"] } },
         { name: "webkit", use: { ...devices["Desktop Safari"] } },
     ],
-    webServer: {
-        command: process.env.CI ? "npm run build && npm run start" : "npm run dev",
-        url: "http://localhost:3000",
-        reuseExistingServer: !process.env.CI,
-    },
+    webServer: [
+        {
+            command: "node e2e/mocks/catalogue-server.js",
+            url: "http://localhost:4100/test",
+            reuseExistingServer: !process.env.CI,
+        },
+        {
+            command: process.env.CI ? "npm run build && npm run start" : "npm run dev",
+            url: "http://localhost:3000",
+            reuseExistingServer: !process.env.CI,
+            env: {
+                CATALOGUE_API_URL: "http://localhost:4100",
+            },
+        },
+    ],
 });

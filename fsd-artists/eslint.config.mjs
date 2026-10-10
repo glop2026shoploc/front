@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Playwright e2e tests: not React code, the react-hooks rules misfire on
+    // fixtures' `use()` parameter and the mock server is plain Node (require()).
+    "e2e/**",
   ]),
 ]);
 
