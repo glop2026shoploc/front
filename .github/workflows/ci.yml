@@ -1,0 +1,17 @@
+name: CI Frontend
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    uses: glop2026shoploc/.github/.github/workflows/front-ci.yml@main
+    with:
+      image-name: front       
+    permissions:
+      contents: read
+      packages: write
