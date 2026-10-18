@@ -19,7 +19,7 @@ export default defineConfig({
     webServer: [
         {
             command: "node e2e/mocks/catalogue-server.js",
-            url: "http://localhost:4100/test",
+            url: "http://localhost:4100/api/catalogue/test",
             reuseExistingServer: !process.env.CI,
         },
         {

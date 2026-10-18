@@ -16,13 +16,13 @@ function sendPayload(res) {
 }
 
 const server = http.createServer((req, res) => {
-    if (req.url === "/test" && req.method === "GET") {
+    if (req.url === "/api/catalogue/test" && req.method === "GET") {
         numberOfTestRequestSinceBeginning += 1;
         sendPayload(res);
         return;
     }
 
-    if (req.url === "/test" && req.method === "POST") {
+    if (req.url === "/api/catalogue/test" && req.method === "POST") {
         let body = "";
         req.on("data", (chunk) => (body += chunk));
         req.on("end", () => {
