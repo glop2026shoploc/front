@@ -1,4 +1,5 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/shared/ui/card";
+import {RegisterShopkeeperForm} from "@/features/register-shopkeeper";
 
 export default function InscriptionCommercantPage() {
 
@@ -13,7 +14,7 @@ export default function InscriptionCommercantPage() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {/*<RegisterCommercantForm />*/}
+                        <RegisterShopkeeperForm />
                     </CardContent>
                 </Card>
             </div>
