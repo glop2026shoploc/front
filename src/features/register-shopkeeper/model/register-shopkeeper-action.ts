@@ -20,7 +20,7 @@ export async function registerShopkeeperAction(
         return { success: false, message: "Le format de l'e-mail n'est pas valide."};
     }
 
-    if (!password.match(emailPattern)) {
+    if (!password.match(passwordPattern)) {
         return { success: false, message: "Le mot de passe doit contenir au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial."};
     }
 
