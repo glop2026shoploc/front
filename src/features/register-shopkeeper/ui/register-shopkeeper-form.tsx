@@ -116,6 +116,7 @@ export function RegisterShopkeeperForm() {
                 <Input
                     id="password"
                     type="password"
+                    minLength={12}
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}
                     required
