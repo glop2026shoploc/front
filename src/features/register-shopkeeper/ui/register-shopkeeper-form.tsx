@@ -56,7 +56,7 @@ export function RegisterShopkeeperForm() {
                 <Input
                     id="raisonSociale"
                     value={form.companyName}
-                    onChange={(e) => setForm({ ...form, companyName: e.target.value })}
+                    onChange={(e) => setForm((prev) => ({ ...prev, companyName: e.target.value }))}
                     required
                 />
             </div>
@@ -65,7 +65,7 @@ export function RegisterShopkeeperForm() {
                 <Label htmlFor="categorie">Catégorie</Label>
                 <Select
                     value={form.category || null}
-                    onValueChange={(value) => setForm({ ...form, category: value ?? "" })}
+                    onValueChange={(value) => setForm((prev) => ({ ...prev, category: value ?? "" }))}
                 >
                     <SelectTrigger id="categorie">
                         <SelectValue placeholder="Choisir une catégorie" />
@@ -85,7 +85,7 @@ export function RegisterShopkeeperForm() {
                     id="siret"
                     inputMode="numeric"
                     value={form.siret}
-                    onChange={(e) => setForm({ ...form, siret: e.target.value })}
+                    onChange={(e) => setForm((prev) => ({ ...prev, siret: e.target.value }))}
                     required
                 />
             </div>
@@ -95,7 +95,7 @@ export function RegisterShopkeeperForm() {
                 <Input
                     id="adressePostale"
                     value={form.address}
-                    onChange={(e) => setForm({ ...form, address: e.target.value })}
+                    onChange={(e) => setForm((prev) => ({ ...prev, address: e.target.value }))}
                     required
                 />
             </div>
@@ -106,7 +106,7 @@ export function RegisterShopkeeperForm() {
                     id="email"
                     type="email"
                     value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
                     required
                 />
             </div>
@@ -118,7 +118,7 @@ export function RegisterShopkeeperForm() {
                     type="password"
                     minLength={12}
                     value={form.password}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    onChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }))}
                     required
                 />
             </div>
