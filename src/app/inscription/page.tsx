@@ -89,7 +89,7 @@ export default function InscriptionPage() {
           <span>J’accepte l’utilisation de mes données personnelles pour créer et gérer mon compte. <Link className="underline" href="/politique-confidentialite" target="_blank" rel="noopener noreferrer">En savoir plus sur l’utilisation de mes données</Link>.</span>
         </label>
         <p className="text-sm text-gray-600">Vous pouvez aussi consulter les <Link className="underline" href="/confidentialite" target="_blank" rel="noopener noreferrer">conditions générales d’utilisation</Link>.</p>
-        <button disabled={loading} className="rounded bg-black px-4 py-2 text-white disabled:opacity-50">
+        <button type="submit" disabled={loading} className="rounded bg-black px-4 py-2 text-white disabled:opacity-50">
           {buttonText}
         </button>
         {message && <p role="status">{message}</p>}
