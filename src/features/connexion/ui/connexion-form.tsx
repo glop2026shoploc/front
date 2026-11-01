@@ -10,7 +10,7 @@ import type { ConnexionState } from "../model/connexion-action";
 
 
 interface LoginProps {
-    onSubmit: (prev: ConnexionState,form: FormData) => Promise<{ error?: string }>;
+    onSubmit: (prev: ConnexionState,form: FormData) => Promise<ConnexionState>;
 }
 
 const initialState: ConnexionState = {};
@@ -29,12 +29,12 @@ export function LoginForm({onSubmit} : LoginProps) {
         <div className="flex h-screen">
   <div className="w-full bg-gray-100 lg:w-1/2 flex items-center justify-center">
     <div className="max-w-md w-full p-6">
-      <h1 className="text-3xl font-semibold mb-6 text-black text-center">Inscription</h1>
+      <h1 className="text-3xl font-semibold mb-6 text-black text-center">Connexion</h1>
       {!pending && (
       <form action={formAction} className="space-y-4">
         <div>
           <label  className="block text-sm font-medium text-gray-700">Email</label>
-          <Input type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"/>
+          <Input defaultValue={state.email} type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"/>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Password</label>
