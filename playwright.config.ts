@@ -23,11 +23,17 @@ export default defineConfig({
             reuseExistingServer: !process.env.CI,
         },
         {
+            command: "node e2e/mocks/shopkeeper-server.js",
+            url: "http://localhost:4101/",
+            reuseExistingServer: !process.env.CI,
+        },
+        {
             command: process.env.CI ? "npm run build && npm run start" : "npm run dev",
             url: "http://localhost:3000",
             reuseExistingServer: !process.env.CI,
             env: {
                 CATALOGUE_API_URL: "http://localhost:4100",
+                USERS_API_URL: "http://localhost:4101",
             },
         },
     ],
