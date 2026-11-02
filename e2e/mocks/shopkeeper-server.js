@@ -25,6 +25,7 @@ const server = http.createServer((req, res) => {
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(
                 JSON.stringify({
+                    shopkeeperId: 1,
                     companyName: shopkeeper.companyName,
                     category: shopkeeper.category,
                     siret: shopkeeper.siret,
@@ -33,6 +34,15 @@ const server = http.createServer((req, res) => {
                     status: "WAITING",
                 })
             );
+        });
+        return;
+    }
+
+    if (req.url === "/api/users/shopkeeper/1/documents" && req.method === "POST") {
+        req.resume();
+        req.on("end", () => {
+            res.writeHead(201);
+            res.end();
         });
         return;
     }

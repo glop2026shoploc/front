@@ -7,6 +7,7 @@ export class RegisterShopkeeperPage {
     readonly addressInput: Locator;
     readonly emailInput: Locator;
     readonly passwordInput: Locator;
+    readonly documentsInput: Locator;
     readonly submitButton: Locator;
     readonly successAlert: Locator;
     readonly errorAlert: Locator;
@@ -18,6 +19,7 @@ export class RegisterShopkeeperPage {
         this.addressInput = page.getByLabel("Adresse postale");
         this.emailInput = page.getByLabel("E-mail");
         this.passwordInput = page.getByLabel("Mot de passe");
+        this.documentsInput = page.getByLabel("Pièces justificatives");
         this.submitButton = page.getByRole("button", { name: "S'inscrire" });
         this.successAlert = page.getByText("Inscription envoyée");
         this.errorAlert = page.getByText("Impossible de finaliser l'inscription", { exact: false });
@@ -47,6 +49,10 @@ export class RegisterShopkeeperPage {
         await this.addressInput.fill(data.address);
         await this.emailInput.fill(data.email);
         await this.passwordInput.fill(data.password);
+    }
+
+    async addDocument(name: string, mimeType: string, size: number) {
+        await this.documentsInput.setInputFiles({ name, mimeType, buffer: Buffer.alloc(size) });
     }
 
     async submit() {

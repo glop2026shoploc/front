@@ -22,6 +22,7 @@ export function RegisterShopkeeperForm() {
     const [result, setResult] = useState<RegisterShopkeeperResult | null>(null);
     const [form, setForm] = useState<ShopkeeperRegistration>(initialFormState);
     const [isPending, setIsPending] = useState(false);
+    const [documents, setDocuments] = useState<File[]>([]);
 
     if (result?.success) {
         return (
@@ -38,8 +39,23 @@ export function RegisterShopkeeperForm() {
         <form
             onSubmit={async (event) => {
                 event.preventDefault();
+
+                let totalSize = 0;
+                for (const file of documents) {
+                    totalSize += file.size;
+                }
+                if (totalSize > 4 * 1024 * 1024) {
+                    setResult({ success: false, message: "Les pièces justificatives ne doivent pas dépasser 4 Mo au total." });
+                    return;
+                }
+
+                const formData = new FormData();
+                for (const file of documents) {
+                    formData.append("documents", file);
+                }
+
                 setIsPending(true);
-                const outcome = await registerShopkeeperAction(form);
+                const outcome = await registerShopkeeperAction(form, formData);
                 setIsPending(false);
                 setResult(outcome);
             }}
@@ -119,6 +135,18 @@ export function RegisterShopkeeperForm() {
                     minLength={12}
                     value={form.password}
                     onChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }))}
+                    required
+                />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+                <Label htmlFor="documents">Pièces justificatives (Kbis, pièce d’identité)</Label>
+                <Input
+                    id="documents"
+                    type="file"
+                    multiple
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    onChange={(e) => setDocuments(Array.from(e.target.files ?? []))}
                     required
                 />
             </div>

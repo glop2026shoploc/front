@@ -8,6 +8,7 @@ export interface ShopkeeperRegistration {
 }
 
 export interface ShopkeeperInfo {
+    shopkeeperId: number;
     companyName: string;
     category: string;
     siret: string;

@@ -14,3 +14,17 @@ export async function registerShopkeeper(shopkeeper: ShopkeeperRegistration): Pr
 
     return response.json();
 }
+
+export async function uploadShopkeeperDocument(shopkeeperId: number, file: File): Promise<void> {
+    const body = new FormData();
+    body.append("file", file);
+
+    const response = await fetch(`${apiConfig.users}/api/users/shopkeeper/${shopkeeperId}/documents`, {
+        method: "POST",
+        body,
+    });
+
+    if (!response.ok) {
+        throw new Error(`Erreur lors de l'envoi du justificatif ${response.status}`);
+    }
+}
