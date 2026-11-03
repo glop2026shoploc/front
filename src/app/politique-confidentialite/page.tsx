@@ -27,7 +27,13 @@ export default function PolitiqueConfidentialitePage() {
         vous pouvez écrire à contact@shoploc.example.
       </p>
       <h2 className="mb-2 mt-6 text-xl font-semibold">Durée de conservation</h2>
-      <p>À compléter avec l’US-1104.</p>
+      <p>Vos données sont conservés tant que votre compte est actif, puis seront supprimés 3 ans
+          après votre dernière activité. Vous pouvez demander la suppression de votre compte à tout moment
+          en écrivant à contact@shoploc.fr.
+          Après la suppression de votre compte, nous pouvons conserver des informations
+          anonymisées, uniquement pour établir des statistiques. Elles ne permettent plus de vous identifier, ni
+          directement ni indirectement.
+      </p>
       <h2 className="mb-2 mt-6 text-xl font-semibold">Destinataires</h2>
       <p>
         Vos données sont enregistrées uniquement dans le service Users. Les
