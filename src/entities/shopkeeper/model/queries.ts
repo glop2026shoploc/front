@@ -2,7 +2,7 @@ import { apiConfig } from "@/shared/config/api";
 import type { ShopkeeperInfo, ShopkeeperRegistration } from "./types";
 
 export async function registerShopkeeper(shopkeeper: ShopkeeperRegistration): Promise<ShopkeeperInfo> {
-    const response = await fetch(`${apiConfig.users}/api/users/shopkeeper/register`, {
+    const response = await fetch(`${apiConfig.gateway}/api/users/shopkeeper/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(shopkeeper),

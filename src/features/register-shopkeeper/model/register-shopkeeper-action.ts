@@ -1,6 +1,8 @@
 "use server";
 
 import {registerShopkeeper, ShopkeeperRegistration} from "@/entities/shopkeeper";
+import {validationMessages} from "@/shared/lib/validations";
+
 export type RegisterShopkeeperResult =
     | { success: true }
     | { success: false; message: string };
@@ -11,19 +13,19 @@ export async function registerShopkeeperAction(Shopkeeper: ShopkeeperRegistratio
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$/;
 
     if (!companyName.trim() || !category.trim() || !siret.trim() || !address.trim() || !email.trim() || !password.trim()) {
-        return { success: false, message: "Tous les champs sont obligatoires." };
+        return { success: false, message: validationMessages.allFieldsRequired };
     }
 
     if (!email.match(emailPattern)) {
-        return { success: false, message: "Le format de l'e-mail n'est pas valide."};
+        return { success: false, message: validationMessages.emailFormat };
     }
 
     if (!password.match(passwordPattern)) {
-        return { success: false, message: "Le mot de passe doit contenir au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial."};
+        return { success: false, message: validationMessages.passwordStrength };
     }
 
     if (!dataUsageConsent) {
-        return { success: false, message: "Vous devez accepter l'utilisation de vos données personnelles pour créer un compte." };
+        return { success: false, message: validationMessages.consentRequired };
     }
     try {
         await registerShopkeeper(Shopkeeper);
