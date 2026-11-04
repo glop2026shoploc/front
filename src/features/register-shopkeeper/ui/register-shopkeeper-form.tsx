@@ -8,6 +8,10 @@ import { Alert, AlertDescription, AlertTitle } from "@/shared/ui/alert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
 import { registerShopkeeperAction, type RegisterShopkeeperResult } from "../model/register-shopkeeper-action";
 import {ShopkeeperRegistration} from "@/entities/shopkeeper";
+import {FieldHint} from "@/shared/ui/field";
+import { Checkbox } from "@/shared/ui/checkbox";
+import Link from "next/link";
+import {routes} from "@/shared/config/routes";
 
 const initialFormState: ShopkeeperRegistration = {
     companyName: "",
@@ -22,6 +26,7 @@ export function RegisterShopkeeperForm() {
     const [result, setResult] = useState<RegisterShopkeeperResult | null>(null);
     const [form, setForm] = useState<ShopkeeperRegistration>(initialFormState);
     const [isPending, setIsPending] = useState(false);
+    const [dataUsageConsent, setDataUsageConsent] = useState(false);
 
     if (result?.success) {
         return (
@@ -39,7 +44,7 @@ export function RegisterShopkeeperForm() {
             onSubmit={async (event) => {
                 event.preventDefault();
                 setIsPending(true);
-                const outcome = await registerShopkeeperAction(form);
+                const outcome = await registerShopkeeperAction(form, dataUsageConsent);
                 setIsPending(false);
                 setResult(outcome);
             }}
@@ -73,7 +78,12 @@ export function RegisterShopkeeperForm() {
                     <SelectContent>
                         <SelectItem value="ALIMENTATION">Alimentation</SelectItem>
                         <SelectItem value="VETEMENT">Vêtement</SelectItem>
-                        <SelectItem value="SERVICES">Services</SelectItem>
+                        <SelectItem value="SERVICES">Restauration</SelectItem>
+                        <SelectItem value="SERVICES">Bricolage & Réparation</SelectItem>
+                        <SelectItem value="SERVICES">Presse</SelectItem>
+                        <SelectItem value="SERVICES">Loisirs</SelectItem>
+                        <SelectItem value="SERVICES">Optique</SelectItem>
+                        <SelectItem value="SERVICES">Animalerie</SelectItem>
                         <SelectItem value="AUTRE">Autre</SelectItem>
                     </SelectContent>
                 </Select>
@@ -121,7 +131,21 @@ export function RegisterShopkeeperForm() {
                     onChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }))}
                     required
                 />
+                <FieldHint id="password-hint">
+                    Au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial.
+                </FieldHint>
             </div>
+
+            <label className="flex items-start gap-2 text-sm">
+                <Checkbox className="mt-0.5" checked={dataUsageConsent} onCheckedChange={setDataUsageConsent} />
+                <span>
+                    J’accepte l’utilisation de mes données personnelles pour créer et gérer mon compte.{" "}
+                    <Link href={routes.privacyPolicy} target="_blank" className="underline underline-offset-4">
+                        En savoir plus sur l’utilisation de mes données
+                    </Link>
+                    .
+                </span>
+            </label>
 
             <Button type="submit" disabled={isPending}>
                 {isPending ? "Envoi..." : "S'inscrire"}
