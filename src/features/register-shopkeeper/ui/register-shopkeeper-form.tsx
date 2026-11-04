@@ -60,6 +60,7 @@ export function RegisterShopkeeperForm() {
                 <Label htmlFor="raisonSociale">Raison sociale</Label>
                 <Input
                     id="raisonSociale"
+                    placeholder="MonCommercant"
                     value={form.companyName}
                     onChange={(e) => setForm((prev) => ({ ...prev, companyName: e.target.value }))}
                     required
@@ -93,6 +94,7 @@ export function RegisterShopkeeperForm() {
                 <Label htmlFor="siret">N° SIRET</Label>
                 <Input
                     id="siret"
+                    placeholder="12345678900013"
                     inputMode="numeric"
                     value={form.siret}
                     onChange={(e) => setForm((prev) => ({ ...prev, siret: e.target.value }))}
@@ -104,6 +106,7 @@ export function RegisterShopkeeperForm() {
                 <Label htmlFor="adressePostale">Adresse postale</Label>
                 <Input
                     id="adressePostale"
+                    placeholder="N° Rue"
                     value={form.address}
                     onChange={(e) => setForm((prev) => ({ ...prev, address: e.target.value }))}
                     required
@@ -114,6 +117,7 @@ export function RegisterShopkeeperForm() {
                 <Label htmlFor="email">E-mail</Label>
                 <Input
                     id="email"
+                    placeholder="moncommercant@example.fr"
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
@@ -125,6 +129,7 @@ export function RegisterShopkeeperForm() {
                 <Label htmlFor="password">Mot de passe</Label>
                 <Input
                     id="password"
+                    placeholder="Créez votre mot de passe"
                     type="password"
                     minLength={12}
                     value={form.password}
