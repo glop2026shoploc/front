@@ -3,5 +3,6 @@ export interface ClientRegistration {
     lastName: string;
     email: string;
     password: string;
+    city: string;
     dataUsageConsent: boolean;
 }

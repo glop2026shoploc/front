@@ -3,6 +3,8 @@ export interface ShopkeeperRegistration {
     category: string;
     siret: string;
     address: string;
+    postalCode: string;
+    city: string;
     email: string;
     password: string;
 }
@@ -12,6 +14,8 @@ export interface ShopkeeperInfo {
     category: string;
     siret: string;
     address: string;
+    postalCode: string;
+    city: string;
     email: string;
     status: "WAITING" | "VALIDATED" | "REJECTED";
 }
