@@ -133,20 +133,20 @@ export function RegisterClientForm({ cities }: ClientCity ) {
                 </FieldHint>
             </Field>
 
-            <label className="flex items-start gap-2 text-sm">
+            <div className="flex items-start gap-2 text-sm">
                 <Checkbox
                     className="mt-0.5"
                     checked={form.dataUsageConsent}
                     onCheckedChange={(checked) => setForm((prev) => ({ ...prev, dataUsageConsent: checked }))}
                 />
-                <span>
+                <FieldHint>
                     J’accepte l’utilisation de mes données personnelles pour créer et gérer mon compte.{" "}
                     <Link href={routes.privacyPolicy} target="_blank" className="underline underline-offset-4">
                         En savoir plus sur l’utilisation de mes données
                     </Link>
                     .
-                </span>
-            </label>
+                </FieldHint>
+            </div>
 
             <Button type="submit" size="lg" className="h-10 w-full" disabled={isPending}>
                 {isPending ? "Création…" : "Créer mon compte client"}

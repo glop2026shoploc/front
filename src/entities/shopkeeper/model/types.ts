@@ -1,12 +1,14 @@
 export interface ShopkeeperRegistration {
+    firstName: string;
+    lastName: string;
     companyName: string;
-    category: string;
+    categoryId: string;
     siret: string;
     address: string;
-    postalCode: string;
-    city: string;
+    cityId: string;
     email: string;
     password: string;
+    dataUsageConsent: boolean;
 }
 
 export interface ShopkeeperInfo {

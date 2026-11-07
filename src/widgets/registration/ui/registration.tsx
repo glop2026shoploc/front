@@ -7,6 +7,7 @@ import { SegmentedLinks } from "@/shared/ui/segmented-links";
 import { RegisterClientForm } from "@/features/register-client";
 import { RegisterShopkeeperForm } from "@/features/register-shopkeeper";
 import {getCities} from "@/entities/city";
+import {getCategories} from "@/entities/category";
 
 export type RegistrationRole = "client" | "shopkeeper";
 
@@ -16,6 +17,7 @@ interface AccountRegistrationProps {
 
 export async function AccountRegistration({ role }: AccountRegistrationProps) {
     const cities = await getCities();
+    const categories = await getCategories();
 
     return (
         <div className="mx-auto w-full max-w-xl px-4 py-10">
@@ -53,7 +55,7 @@ export async function AccountRegistration({ role }: AccountRegistrationProps) {
 
                     <p className="text-xs text-muted-foreground">Tous les champs sont obligatoires.</p>
 
-                    {role === "client" ? <RegisterClientForm cities={cities} /> : <RegisterShopkeeperForm />}
+                    {role === "client" ? <RegisterClientForm cities={cities} /> : <RegisterShopkeeperForm cities={cities} categories={categories} />}
                 </CardContent>
 
                 <CardFooter className="justify-center text-xs text-muted-foreground">
