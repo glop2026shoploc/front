@@ -18,6 +18,7 @@ const initialFormState: ShopkeeperRegistration = {
     category: "",
     siret: "",
     address: "",
+    cityId: "",
     email: "",
     password: "",
 };

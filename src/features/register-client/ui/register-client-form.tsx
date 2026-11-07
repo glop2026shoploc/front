@@ -13,16 +13,23 @@ import { Label } from "@/shared/ui/label";
 import { PasswordInput } from "@/shared/ui/password-input";
 import { ClientRegistration } from "@/entities/client";
 import { submitClientRegistration, type RegisterClientResult } from "../model/register-client-action";
+import {City} from "@/entities/city";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/shared/ui/select";
 
 const initialFormState: ClientRegistration = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    cityId: "",
     dataUsageConsent: false,
 };
 
-export function RegisterClientForm() {
+interface ClientCity  {
+    cities: City[];
+}
+
+export function RegisterClientForm({ cities }: ClientCity ) {
     const [result, setResult] = useState<RegisterClientResult | null>(null);
     const [form, setForm] = useState<ClientRegistration>(initialFormState);
     const [isPending, setIsPending] = useState(false);
@@ -77,6 +84,24 @@ export function RegisterClientForm() {
                     />
                 </Field>
             </div>
+
+            <Field>
+                <Label htmlFor="city">Ville</Label>
+                <Select
+                    items={cities.map((city) => ({ label: city.name, value: city.id }))}
+                    value={form.cityId || null}
+                    onValueChange={(value) => setForm((prev) => ({ ...prev, cityId: value ?? "" }))}
+                >
+                    <SelectTrigger id="categorie">
+                        <SelectValue placeholder="Sélectionner votre ville" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        { cities.map( (city) => (
+                            <SelectItem key={city.id} value={city.id}>{city.name}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </Field>
 
             <Field>
                 <Label htmlFor="email">Adresse e-mail</Label>

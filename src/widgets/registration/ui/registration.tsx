@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { SegmentedLinks } from "@/shared/ui/segmented-links";
 import { RegisterClientForm } from "@/features/register-client";
 import { RegisterShopkeeperForm } from "@/features/register-shopkeeper";
+import {getCities} from "@/entities/city";
 
 export type RegistrationRole = "client" | "shopkeeper";
 
@@ -13,7 +14,9 @@ interface AccountRegistrationProps {
     role: RegistrationRole;
 }
 
-export function AccountRegistration({ role }: AccountRegistrationProps) {
+export async function AccountRegistration({ role }: AccountRegistrationProps) {
+    const cities = await getCities();
+
     return (
         <div className="mx-auto w-full max-w-xl px-4 py-10">
             <Card className="[--card-spacing:--spacing(6)]">
@@ -50,7 +53,7 @@ export function AccountRegistration({ role }: AccountRegistrationProps) {
 
                     <p className="text-xs text-muted-foreground">Tous les champs sont obligatoires.</p>
 
-                    {role === "client" ? <RegisterClientForm /> : <RegisterShopkeeperForm />}
+                    {role === "client" ? <RegisterClientForm cities={cities} /> : <RegisterShopkeeperForm />}
                 </CardContent>
 
                 <CardFooter className="justify-center text-xs text-muted-foreground">
