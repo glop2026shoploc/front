@@ -53,6 +53,8 @@ export function RegisterClientForm({ cities }: ClientCity ) {
             }}
             className="flex flex-col gap-4"
         >
+            <p className="text-xs text-muted-foreground">Tous les champs sont obligatoires.</p>
+
             {result && !result.success && (
                 <Alert variant="destructive">
                     <AlertDescription>{result.message}</AlertDescription>

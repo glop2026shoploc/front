@@ -53,8 +53,6 @@ export async function AccountRegistration({ role }: AccountRegistrationProps) {
                         />
                     </div>
 
-                    <p className="text-xs text-muted-foreground">Tous les champs sont obligatoires.</p>
-
                     {role === "client" ? <RegisterClientForm cities={cities} /> : <RegisterShopkeeperForm cities={cities} categories={categories} />}
                 </CardContent>
 
