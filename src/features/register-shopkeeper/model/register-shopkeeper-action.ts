@@ -28,20 +28,10 @@ export async function registerShopkeeperAction(Shopkeeper: ShopkeeperRegistratio
     if (!dataUsageConsent) {
         return { success: false, message: validationMessages.consentRequired };
     }
-    // try {
-    //     await registerShopkeeper(Shopkeeper);
-    //     return { success: true };
-    // } catch (error){
-    //     return {
-    //         success: false,
-    //         message: "Impossible de finaliser l'inscription. Vérifiez vos informations (email ou SIRET peut-être déjà utilisé).",
-    //     };
-    // }
     try {
         await registerShopkeeper(Shopkeeper);
         return { success: true };
     } catch (error) {
-        console.error("Inscription commerçant échouée :", error);
         return {
             success: false,
             message: error instanceof Error ? error.message : "Impossible de finaliser l'inscription.",

@@ -92,7 +92,7 @@ export function RegisterClientForm({ cities }: ClientCity ) {
                     value={form.cityId || null}
                     onValueChange={(value) => setForm((prev) => ({ ...prev, cityId: value ?? "" }))}
                 >
-                    <SelectTrigger id="categorie">
+                    <SelectTrigger id="city">
                         <SelectValue placeholder="Sélectionner votre ville" />
                     </SelectTrigger>
                     <SelectContent>

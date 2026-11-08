@@ -55,7 +55,7 @@ export function RegisterShopkeeperForm({ cities, categories }: ShopkeeperOptions
             onSubmit={async (event) => {
                 event.preventDefault();
                 setIsPending(true);
-                const outcome = await registerShopkeeperAction(form, dataUsageConsent);
+                const outcome = await registerShopkeeperAction(form);
                 setIsPending(false);
                 setResult(outcome);
             }}
@@ -124,7 +124,7 @@ export function RegisterShopkeeperForm({ cities, categories }: ShopkeeperOptions
                         value={form.cityId || null}
                         onValueChange={(value) => setForm((prev) => ({ ...prev, cityId: value ?? "" }))}
                     >
-                        <SelectTrigger id="categorie">
+                        <SelectTrigger id="city">
                             <SelectValue placeholder="Sélectionner votre ville" />
                         </SelectTrigger>
                         <SelectContent>
