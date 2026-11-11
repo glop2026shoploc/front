@@ -19,7 +19,18 @@ export default defineConfig({
     webServer: [
         {
             command: "node e2e/mocks/catalogue-server.js",
-            url: "http://localhost:4100/api/catalogue/test",
+            url: "http://localhost:4103/api/catalogue/test",
+            reuseExistingServer: !process.env.CI,
+            env: { PORT: "4103" },
+        },
+        {
+            command: "node e2e/mocks/shopkeepers-server.js",
+            url: "http://localhost:4102/api/catalogue/shopkeepers",
+            reuseExistingServer: !process.env.CI,
+        },
+        {
+            command: "node e2e/mocks/shopkeeper-server.js",
+            url: "http://localhost:4101/",
             reuseExistingServer: !process.env.CI,
         },
         {
@@ -27,7 +38,9 @@ export default defineConfig({
             url: "http://localhost:3000",
             reuseExistingServer: !process.env.CI,
             env: {
-                CATALOGUE_API_URL: "http://localhost:4100",
+                NEXT_PUBLIC_GATEWAY_URL: "http://localhost:4102",
+                CATALOGUE_API_URL: "http://localhost:4103",
+                USERS_API_URL: "http://localhost:4101",
             },
         },
     ],

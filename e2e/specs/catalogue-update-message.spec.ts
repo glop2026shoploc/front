@@ -3,7 +3,7 @@ import { test, expect } from "../fixtures";
 const DEFAULT_MESSAGE = "Message de test depuis la base";
 
 test.afterEach(async ({ request }) => {
-    await request.post("http://localhost:4100/api/catalogue/test", {
+    await request.post("http://localhost:4103/api/catalogue/test", {
         data: { message: DEFAULT_MESSAGE },
     });
 });
