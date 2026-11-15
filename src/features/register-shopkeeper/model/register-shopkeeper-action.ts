@@ -1,6 +1,8 @@
 "use server";
 
 import {registerShopkeeper, ShopkeeperRegistration, uploadShopkeeperDocument} from "@/entities/shopkeeper";
+import {validationMessages} from "@/shared/lib/validations";
+
 export type RegisterShopkeeperResult =
     | { success: true }
     | { success: false; message: string };
@@ -9,20 +11,25 @@ export async function registerShopkeeperAction(
     Shopkeeper: ShopkeeperRegistration,
     documents: FormData
 ): Promise<RegisterShopkeeperResult> {
-    const { companyName, category, siret, address, email, password } = Shopkeeper;
+    const { firstName, lastName, companyName, categoryId, siret, address, cityId, email, password, dataUsageConsent } = Shopkeeper;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$/;
 
-    if (!companyName.trim() || !category.trim() || !siret.trim() || !address.trim() || !email.trim() || !password.trim()) {
-        return { success: false, message: "Tous les champs sont obligatoires." };
+    if (!firstName.trim() || !lastName.trim() || !companyName.trim() || !categoryId ||
+        !siret.trim() || !address.trim() || !cityId || !email.trim() || !password.trim()) {
+        return { success: false, message: validationMessages.allFieldsRequired };
     }
 
     if (!email.match(emailPattern)) {
-        return { success: false, message: "Le format de l'e-mail n'est pas valide."};
+        return { success: false, message: validationMessages.emailFormat };
     }
 
     if (!password.match(passwordPattern)) {
-        return { success: false, message: "Le mot de passe doit contenir au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial."};
+        return { success: false, message: validationMessages.passwordStrength };
+    }
+
+    if (!dataUsageConsent) {
+        return { success: false, message: validationMessages.consentRequired };
     }
 
     const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
@@ -42,10 +49,10 @@ export async function registerShopkeeperAction(
     try {
         const shopkeeper = await registerShopkeeper(Shopkeeper);
         shopkeeperId = shopkeeper.shopkeeperId;
-    } catch (error){
+    } catch (error) {
         return {
             success: false,
-            message: "Impossible de finaliser l'inscription. Vérifiez vos informations (email ou SIRET peut-être déjà utilisé).",
+            message: error instanceof Error ? error.message : "Impossible de finaliser l'inscription.",
         };
     }
 
