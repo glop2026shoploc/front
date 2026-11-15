@@ -22,3 +22,8 @@ export interface ShopkeeperInfo {
     email: string;
     status: "WAITING" | "VALIDATED" | "REJECTED";
 }
+
+export interface TokenResponse {
+    type: string;
+    token: string;
+}

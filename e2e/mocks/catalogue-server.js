@@ -39,6 +39,15 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    if (req.url === "/api/catalogue/shops/00000000-0000-0000-0000-000000000101/documents" && req.method === "POST") {
+        req.resume();
+        req.on("end", () => {
+            res.writeHead(201);
+            res.end();
+        });
+        return;
+    }
+
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ error: "Not found" }));
 });

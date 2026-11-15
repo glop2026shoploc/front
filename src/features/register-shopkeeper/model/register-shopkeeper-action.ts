@@ -45,10 +45,10 @@ export async function registerShopkeeperAction(
         return { success: false, message: "Ajoutez au moins une pièce justificative." };
     }
 
-    let shopkeeperId: number;
+    let token: string;
     try {
-        const shopkeeper = await registerShopkeeper(Shopkeeper);
-        shopkeeperId = shopkeeper.shopkeeperId;
+        const response = await registerShopkeeper(Shopkeeper);
+        token = response.token;
     } catch (error) {
         return {
             success: false,
@@ -57,8 +57,10 @@ export async function registerShopkeeperAction(
     }
 
     try {
+        // Le shopId est dans la partie du milieu du token, encodée en base64
+        const payload = JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString());
         for (const file of files) {
-            await uploadShopkeeperDocument(shopkeeperId, file);
+            await uploadShopkeeperDocument(payload.shopId, file);
         }
     } catch {
         return {

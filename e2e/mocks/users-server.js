@@ -52,7 +52,8 @@ const server = http.createServer(async (req, res) => {
     if (isRegistration && req.method === "POST") {
         const error = checkRegistration(req.url, await readBody(req));
         if (error) return sendJson(res, error.status, error.problem);
-        return sendJson(res, 201, { type: "Bearer", token: "mock-token" });
+        const payload = Buffer.from(JSON.stringify({ shopId: ID })).toString("base64url");
+        return sendJson(res, 201, { type: "Bearer", token: `header.${payload}.signature` });
     }
 
     sendJson(res, 404, { detail: "Not found" });

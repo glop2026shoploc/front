@@ -1,8 +1,8 @@
 import { apiConfig } from "@/shared/config/api";
-import type { ShopkeeperInfo, ShopkeeperRegistration } from "./types";
+import type { ShopkeeperRegistration, TokenResponse } from "./types";
 import {readProblemMessage} from "@/shared/api/problem-detail";
 
-export async function registerShopkeeper(shopkeeper: ShopkeeperRegistration): Promise<ShopkeeperInfo> {
+export async function registerShopkeeper(shopkeeper: ShopkeeperRegistration): Promise<TokenResponse> {
     const response = await fetch(`${apiConfig.users}/api/users/shopkeeper/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,11 +31,11 @@ export async function registerShopkeeper(shopkeeper: ShopkeeperRegistration): Pr
     return response.json();
 }
 
-export async function uploadShopkeeperDocument(shopkeeperId: number, file: File): Promise<void> {
+export async function uploadShopkeeperDocument(shopId: string, file: File): Promise<void> {
     const body = new FormData();
     body.append("file", file);
 
-    const response = await fetch(`${apiConfig.users}/api/users/shopkeeper/${shopkeeperId}/documents`, {
+    const response = await fetch(`${apiConfig.catalogue}/api/catalogue/shops/${shopId}/documents`, {
         method: "POST",
         body,
     });
