@@ -4,4 +4,5 @@ export const routes = {
     signIn: "/connexion",
     terms: "/confidentialite",
     privacyPolicy: "/politique-confidentialite",
+    admin: "/admin",
 };

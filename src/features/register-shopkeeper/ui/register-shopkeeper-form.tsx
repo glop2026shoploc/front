@@ -212,6 +212,18 @@ export function RegisterShopkeeperForm({ cities, categories }: ShopkeeperOptions
                 </FieldHint>
             </div>
 
+            <div className="flex flex-col gap-1.5">
+                <Label htmlFor="documents">Pièces justificatives (Kbis, pièce d’identité)</Label>
+                <Input
+                    id="documents"
+                    type="file"
+                    multiple
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    onChange={(e) => setDocuments(Array.from(e.target.files ?? []))}
+                    required
+                />
+            </div>
+
             <div className="flex items-start gap-2 text-sm">
                 <Checkbox
                     className="mt-0.5"
@@ -225,18 +237,6 @@ export function RegisterShopkeeperForm({ cities, categories }: ShopkeeperOptions
                     </Link>
                     .
                 </FieldHint>
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-                <Label htmlFor="documents">Pièces justificatives (Kbis, pièce d’identité)</Label>
-                <Input
-                    id="documents"
-                    type="file"
-                    multiple
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    onChange={(e) => setDocuments(Array.from(e.target.files ?? []))}
-                    required
-                />
             </div>
 
             <Button type="submit" disabled={isPending}>
