@@ -7,6 +7,26 @@ let currentMessage = "Message de test depuis la base";
 const shops = [
     { shopId: "00000000-0000-0000-0000-00000000000a", name: "Boulangerie Dupont", siret: "12345678900013", address: { road: "rue de la République", number: "12" }, status: "WAITING" },
     { shopId: "00000000-0000-0000-0000-00000000000b", name: "Fleuriste Martin", siret: "12345678900021", address: { road: "rue Nationale", number: "3" }, status: "WAITING" },
+    {
+        shopId: "00000000-0000-0000-0000-00000000000c",
+        name: "Café du Marché",
+        siret: "12345678900039",
+        categoryIds: ["00000000-0000-0000-0000-000000000101"],
+        address: { road: "place du Général de Gaulle", number: "4", complement: null, cityId: "00000000-0000-0000-0000-000000000101" },
+        status: "VALIDATED",
+    },
+];
+
+const openingHours = [
+    { dayOfWeek: 1, openTime: "08:00:00", closeTime: "12:30:00" },
+    { dayOfWeek: 1, openTime: "14:00:00", closeTime: "19:00:00" },
+    { dayOfWeek: 2, openTime: "08:00:00", closeTime: "19:00:00" },
+    { dayOfWeek: 6, openTime: "09:00:00", closeTime: "18:00:00" },
+];
+
+const products = [
+    { productId: "00000000-0000-0000-0000-0000000000p1", name: "Café allongé", price: 2.5, pointsPrice: 25, earnedPoints: 0, quantity: 40 },
+    { productId: "00000000-0000-0000-0000-0000000000p2", name: "Croissant", price: 1.2, pointsPrice: null, earnedPoints: 3, quantity: 0 },
 ];
 
 function sendPayload(res) {
@@ -41,6 +61,23 @@ const server = http.createServer((req, res) => {
             currentMessage = message;
             sendPayload(res);
         });
+        return;
+    }
+
+    const validatedShop = shops[2];
+    if (req.url === `/api/catalogue/shops/${validatedShop.shopId}` && req.method === "GET") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(validatedShop));
+        return;
+    }
+    if (req.url === `/api/catalogue/shops/${validatedShop.shopId}/opening-hours` && req.method === "GET") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(openingHours));
+        return;
+    }
+    if (req.url === `/api/catalogue/shops/${validatedShop.shopId}/products` && req.method === "GET") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(products));
         return;
     }
 

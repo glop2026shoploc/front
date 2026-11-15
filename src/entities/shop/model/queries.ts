@@ -1,5 +1,5 @@
 import { apiConfig } from "@/shared/config/api";
-import type { Shop } from "./types";
+import type { OpeningHours, Shop } from "./types";
 
 export async function getWaitingShops(): Promise<Shop[]> {
     const response = await fetch(`${apiConfig.catalogue}/api/catalogue/shops/admin/waiting`);
@@ -29,4 +29,27 @@ export async function updateShopStatus(shopId: string, status: "VALIDATED" | "RE
     if (!response.ok) {
         throw new Error(`Erreur lors du changement de statut ${response.status}`);
     }
+}
+
+export async function getShop(shopId: string): Promise<Shop | null> {
+    const response = await fetch(`${apiConfig.catalogue}/api/catalogue/shops/${shopId}`);
+
+    if (response.status === 404) {
+        return null;
+    }
+    if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération du commerce ${response.status}`);
+    }
+
+    return response.json();
+}
+
+export async function getShopOpeningHours(shopId: string): Promise<OpeningHours[]> {
+    const response = await fetch(`${apiConfig.catalogue}/api/catalogue/shops/${shopId}/opening-hours`);
+
+    if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération des horaires ${response.status}`);
+    }
+
+    return response.json();
 }
