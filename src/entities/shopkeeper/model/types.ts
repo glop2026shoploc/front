@@ -1,3 +1,5 @@
+import { Credentials } from "@/entities/utilisateur";
+
 export interface ShopkeeperRegistration {
     firstName: string;
     lastName: string;
@@ -20,4 +22,7 @@ export interface ShopkeeperInfo {
     city: string;
     email: string;
     status: "WAITING" | "VALIDATED" | "REJECTED";
+}
+
+export interface ShopKeeperLogin extends Credentials {
 }

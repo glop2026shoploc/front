@@ -1,29 +1,16 @@
 import { apiConfig } from "@/shared/config/api";
-import { Credentials, Inscription, TokenResponse } from "./types";
-
-export async function register(inscription: Inscription): Promise<TokenResponse> {
-    const response:Response = await fetch(`${apiConfig.users}/auth/register`, 
-        {method: "POST", 
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify(inscription)
-        }
-    )
-    console.log(response);
-    if(!response.ok)throw new Error();
-
-    return response.json();
-}
+import { Credentials, Role, TokenResponse } from "./types";
 
 
-export async function login(credentials: Credentials): Promise<TokenResponse> {
+export async function login(credentials: Credentials, role: Role): Promise<TokenResponse> {
     const response:Response = await fetch(`${apiConfig.users}/auth/login`, 
         {method: "POST", 
             headers:{"Content-Type":"application/json"},
-            body: JSON.stringify(credentials)
+            body: JSON.stringify({...credentials,role:role})
         }
     )
     console.log(response);
-    if(!response.ok)throw new Error();
+    if(!response.ok)throw new Error("Email ou mot de passe incorrect");
 
     return response.json();
 }

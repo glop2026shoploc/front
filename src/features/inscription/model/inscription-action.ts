@@ -1,6 +1,6 @@
 "use server";
 
-import { register,setSession,TokenResponse} from "@/entities/utilisateur/";
+import { register,setSession,TokenResponse} from "@/entities/utilisateur";
 
 export async function inscriptionAction (form: FormData) {
     console.log(form);

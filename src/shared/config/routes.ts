@@ -1,7 +1,7 @@
 export const routes = {
     home: "/registration",
     signUp: "/registration",
-    signIn: "/connexion",
+    signIn: "/signin",
     terms: "/confidentialite",
     privacyPolicy: "/politique-confidentialite",
 };
