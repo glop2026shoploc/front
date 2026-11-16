@@ -9,5 +9,4 @@ export interface ClientRegistration {
     dataUsageConsent: boolean;
 }
 
-export interface ClientLogin extends Credentials {
-}
+export type ClientLogin = Credentials;

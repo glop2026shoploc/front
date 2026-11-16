@@ -24,5 +24,4 @@ export interface ShopkeeperInfo {
     status: "WAITING" | "VALIDATED" | "REJECTED";
 }
 
-export interface ShopKeeperLogin extends Credentials {
-}
+export type ShopKeeperLogin = Credentials;
