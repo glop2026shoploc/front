@@ -1,4 +1,4 @@
-import { Credentials } from "@/entities/utilisateur";
+import { Credentials } from "@/entities/user";
 
 export interface ShopkeeperRegistration {
     firstName: string;

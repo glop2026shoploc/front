@@ -1,7 +1,7 @@
 "use server";
 
 import { ClientLogin } from "@/entities/client";
-import { login,setSession,TokenResponse,Role} from "@/entities/utilisateur";
+import { login,setSession,TokenResponse,Role} from "@/entities/user";
 import { routes } from "@/shared/config/routes";
 import { validationMessages } from "@/shared/lib/validations";
 import { redirect } from "next/navigation";

@@ -1,7 +1,7 @@
 "use server";
 
 import { ShopKeeperLogin } from "@/entities/shopkeeper";
-import { login,setSession,TokenResponse} from "@/entities/utilisateur";
+import { login,setSession,TokenResponse} from "@/entities/user";
 import { routes } from "@/shared/config/routes";
 import { validationMessages } from "@/shared/lib/validations";
 import { redirect } from "next/navigation";
