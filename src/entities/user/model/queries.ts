@@ -1,12 +1,12 @@
 import { apiConfig } from "@/shared/config/api";
 import { Credentials, Role, TokenResponse } from "./types";
+import { apiFetch } from "@/shared/api/fetch";
 
 
 export async function login(credentials: Credentials, role: Role): Promise<TokenResponse> {
-    const response:Response = await fetch(`${apiConfig.users}/auth/login`, 
+    const response:Response = await apiFetch(`${apiConfig.users}/auth/login`, 
         {method: "POST", 
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({...credentials,role:role})
+            body: {...credentials,role:role}
         }
     )
     console.log(response);

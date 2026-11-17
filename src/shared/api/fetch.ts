@@ -6,7 +6,7 @@ type ApiFetchOptions = {
     body?: unknown;
 };
 
-export async function apiFetch(url:string, {method='GET',headers,body}:ApiFetchOptions): Promise<Response> {
+export async function apiFetch(url:string, {method='GET',headers,body}:ApiFetchOptions={}): Promise<Response> {
     const token = (await cookies()).get("token")?.value;
     return await fetch(url,{
         method:method,

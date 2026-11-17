@@ -1,12 +1,15 @@
 import {ClientRegistration} from "@/entities/client/model/types";
 import {apiConfig} from "@/shared/config/api";
 import {readProblemMessage} from "@/shared/api/problem-detail";
+import { apiFetch } from "@/shared/api/fetch";
+import { getSession } from "@/entities/user";
 
 export async function registerClient(client: ClientRegistration): Promise<void> {
-    const response = await fetch(`${apiConfig.users}/api/users/client/register`, {
+    const url = apiConfig.users+"/client" +(await getSession() ? "":"/register")
+    const response = await apiFetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        body: {
             account: {
                 firstName: client.firstName,
                 lastName : client.lastName,
@@ -15,7 +18,7 @@ export async function registerClient(client: ClientRegistration): Promise<void> 
                 dataUsageConsent: client.dataUsageConsent,
             },
             cityId: client.cityId,
-        }),
+        },
     });
 
     if (!response.ok) {

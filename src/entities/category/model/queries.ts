@@ -1,5 +1,6 @@
 import { apiConfig } from "@/shared/config/api";
 import type { Category } from "./types";
+import { apiFetch } from "@/shared/api/fetch";
 
 interface CatalogueCategory {
     categoryId: string;
@@ -7,7 +8,7 @@ interface CatalogueCategory {
 }
 
 export async function getCategories(): Promise<Category[]> {
-    const response = await fetch(`${apiConfig.catalogue}/api/catalogue/categories`);
+    const response = await apiFetch(`${apiConfig.catalogue}/categories`);
 
     if (!response.ok) {
         throw new Error(`Erreur lors du chargemement des catégories : ${response.status}`);
