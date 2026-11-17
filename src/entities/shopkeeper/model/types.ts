@@ -11,13 +11,7 @@ export interface ShopkeeperRegistration {
     dataUsageConsent: boolean;
 }
 
-export interface ShopkeeperInfo {
-    companyName: string;
-    category: string;
-    siret: string;
-    address: string;
-    postalCode: string;
-    city: string;
-    email: string;
-    status: "WAITING" | "VALIDATED" | "REJECTED";
+export interface TokenResponse {
+    type: string;
+    token: string;
 }

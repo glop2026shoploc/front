@@ -6,7 +6,6 @@ const port = Number(process.env.PORT ?? 4101);
 const takenEmail = "deja.inscrit@example.com";
 
 const cities = [{ id: ID, name: "Lille" }];
-const categories = [{ id: ID, name: "Café" }];
 
 function sendJson(res, status, payload) {
     res.writeHead(status, { "Content-Type": "application/json" });
@@ -46,7 +45,6 @@ function checkRegistration(url, payload) {
 const server = http.createServer(async (req, res) => {
     if (req.url === "/" && req.method === "GET") return sendJson(res, 200, { status: "ok" });
     if (req.url === "/api/users/cities" && req.method === "GET") return sendJson(res, 200, cities);
-    if (req.url === "/api/users/categories" && req.method === "GET") return sendJson(res, 200, categories);
 
     const isRegistration = req.url === "/api/users/client/register" || req.url === "/api/users/shopkeeper/register";
     if (isRegistration && req.method === "POST") {
