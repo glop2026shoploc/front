@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { siteConfig } from "@/shared/config/site";
 import "./globals.css";
 import {SiteHeader} from "@/widgets/header";

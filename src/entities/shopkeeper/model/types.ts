@@ -1,3 +1,5 @@
+import { Credentials } from "@/entities/user";
+
 export interface ShopkeeperRegistration {
     firstName: string;
     lastName: string;
@@ -10,6 +12,8 @@ export interface ShopkeeperRegistration {
     password: string;
     dataUsageConsent: boolean;
 }
+
+export type ShopKeeperLogin = Credentials;
 
 export interface TokenResponse {
     type: string;

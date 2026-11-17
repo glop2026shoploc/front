@@ -1,3 +1,5 @@
+import { Credentials } from "@/entities/user";
+
 export interface ClientRegistration {
     firstName: string;
     lastName: string;
@@ -6,3 +8,5 @@ export interface ClientRegistration {
     cityId: string;
     dataUsageConsent: boolean;
 }
+
+export type ClientLogin = Credentials;
