@@ -3,6 +3,7 @@ const http = require("node:http");
 const port = Number(process.env.PORT ?? 4100);
 let numberOfTestRequestSinceBeginning = 0;
 let currentMessage = "Message de test depuis la base";
+const categories = [{ categoryId: "000001", name: "Café" }];
 
 function sendPayload(res) {
     res.writeHead(200, { "Content-Type": "application/json" });
@@ -16,6 +17,12 @@ function sendPayload(res) {
 }
 
 const server = http.createServer((req, res) => {
+    if (req.url === "/api/catalogue/categories" && req.method === "GET") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(categories));
+        return;
+    }
+
     if (req.url === "/api/catalogue/test" && req.method === "GET") {
         numberOfTestRequestSinceBeginning += 1;
         sendPayload(res);

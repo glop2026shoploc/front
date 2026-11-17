@@ -1,8 +1,8 @@
 import { apiConfig } from "@/shared/config/api";
-import type { ShopkeeperInfo, ShopkeeperRegistration } from "./types";
+import type { TokenResponse, ShopkeeperRegistration } from "./types";
 import {readProblemMessage} from "@/shared/api/problem-detail";
 
-export async function registerShopkeeper(shopkeeper: ShopkeeperRegistration): Promise<ShopkeeperInfo> {
+export async function registerShopkeeper(shopkeeper: ShopkeeperRegistration): Promise<TokenResponse> {
     const response = await fetch(`${apiConfig.users}/api/users/shopkeeper/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
