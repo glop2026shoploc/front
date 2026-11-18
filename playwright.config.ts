@@ -32,8 +32,8 @@ export default defineConfig({
             url: "http://localhost:3000",
             reuseExistingServer: !process.env.CI,
             env: {
-                CATALOGUE_API_URL: "http://localhost:4100",
-                USERS_API_URL: "http://localhost:4101",
+                CATALOGUE_API_URL: "http://localhost:4100/api/catalogue",
+                USERS_API_URL: "http://localhost:4101/api/users",
             },
         },
     ],

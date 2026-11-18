@@ -14,6 +14,8 @@ import Link from "next/link";
 import {routes} from "@/shared/config/routes";
 import {City} from "@/entities/city";
 import {Category} from "@/entities/category";
+import { AddressAutocomplete } from "@/shared/ui/address-autocomplete";
+import type { AddressSuggestion } from "@/shared/api/geoplateforme";
 
 const initialFormState: ShopkeeperRegistration = {
     firstName: "",
@@ -22,6 +24,7 @@ const initialFormState: ShopkeeperRegistration = {
     categoryId: "",
     siret: "",
     address: "",
+    location: null,
     cityId: "",
     email: "",
     password: "",
@@ -38,6 +41,23 @@ export function RegisterShopkeeperForm({ cities, categories }: ShopkeeperOptions
     const [form, setForm] = useState<ShopkeeperRegistration>(initialFormState);
     const [isPending, setIsPending] = useState(false);
     const [dataUsageConsent, setDataUsageConsent] = useState(false);
+
+    function selectAddress(suggestion: AddressSuggestion) {
+        // Présélectionne la ville de l'adresse si elle fait partie des villes de l'application.
+        // sensitivity "base" : ignore majuscules et accents ("Lille" = "LILLE")
+        const city = cities.find((candidate) => candidate.name.localeCompare(suggestion.city, "fr", { sensitivity: "base" }) === 0);
+        setForm((prev) => ({
+            ...prev,
+            address: suggestion.label,
+            location: {
+                number: suggestion.number,
+                road: suggestion.road,
+                latitude: suggestion.latitude,
+                longitude: suggestion.longitude,
+            },
+            cityId: city?.id ?? prev.cityId,
+        }));
+    }
 
     if (result?.success) {
         return (
@@ -109,14 +129,19 @@ export function RegisterShopkeeperForm({ cities, categories }: ShopkeeperOptions
             <div className="grid gap-4 sm:grid-cols-2">
                 <Field>
                     <Label htmlFor="address">Adresse postale</Label>
-                    <Input
+                    <AddressAutocomplete
                         id="address"
                         placeholder="N° Rue du Commerce"
-                        autoComplete="address"
                         value={form.address}
-                        onChange={(e) => setForm((prev) => ({ ...prev, address: e.target.value }))}
+                        onTextChange={(text) => setForm((prev) => ({ ...prev, address: text, location: null }))}
+                        onSelect={selectAddress}
                         required
                     />
+                    <FieldHint>
+                        {form.location
+                            ? "Adresse localisée : votre commerce apparaîtra avec sa distance."
+                            : "Choisissez une adresse proposée pour que les clients voient la distance jusqu'à votre commerce."}
+                    </FieldHint>
                 </Field>
 
                 <Field>
