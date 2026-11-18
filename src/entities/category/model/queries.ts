@@ -8,7 +8,7 @@ interface CatalogueCategory {
 }
 
 export async function getCategories(): Promise<Category[]> {
-    const response = await apiFetch(`${apiConfig.catalogue}/categories`);
+    const response = await apiFetch(`${apiConfig.catalogue}/categories`,{requireAuth: false});
 
     if (!response.ok) {
         throw new Error(`Erreur lors du chargemement des catégories : ${response.status}`);
