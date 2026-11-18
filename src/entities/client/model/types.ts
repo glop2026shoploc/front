@@ -10,3 +10,7 @@ export interface ClientRegistration {
 }
 
 export type ClientLogin = Credentials;
+
+export interface AddClient{
+    cityId:string;
+}

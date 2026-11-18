@@ -13,6 +13,15 @@ export interface ShopkeeperRegistration {
     dataUsageConsent: boolean;
 }
 
+export interface AddShopKeeper {
+    companyName: string;
+    categoryId: string;
+    siret: string;
+    address: string;
+    cityId: string;
+}
+
+
 export type ShopKeeperLogin = Credentials;
 
 export interface TokenResponse {
