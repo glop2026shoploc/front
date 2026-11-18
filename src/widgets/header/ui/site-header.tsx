@@ -2,11 +2,12 @@ import Link from "next/link";
 import { routes } from "@/shared/config/routes";
 import { siteConfig } from "@/shared/config/site";
 import { buttonVariants } from "@/shared/ui/button";
-import { getSession } from "@/entities/user";
+import { getSession, getSessionClaims } from "@/entities/user";
 import { LogoutButton } from "@/features/logout";
 
 export async function SiteHeader() {
     const isLoggedIn = !!(await getSession());
+    const session = await getSessionClaims();
     return (
         <header className="border-b">
             <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4">
@@ -14,6 +15,11 @@ export async function SiteHeader() {
                     {siteConfig.name}
                 </Link>
                 <nav aria-label="Compte" className="flex items-center gap-3 text-sm">
+                    {session?.role === "CLIENT" && (
+                        <Link href={routes.shops} className="font-medium hover:underline">
+                            Commerçants
+                        </Link>
+                    )}
                     {
                         isLoggedIn? (<LogoutButton />)
                         :
