@@ -8,14 +8,17 @@ import { RegisterClientForm } from "@/features/register-client";
 import { RegisterShopkeeperForm } from "@/features/register-shopkeeper";
 import {getCities} from "@/entities/city";
 import {getCategories} from "@/entities/category";
+import { AddClientForm } from "@/features/add-client";
+import { AddShopkeeperForm } from "@/features/add-shopkeeper";
 
 export type RegistrationRole = "client" | "shopkeeper";
 
 interface AccountRegistrationProps {
     role: RegistrationRole;
+    connected: boolean
 }
 
-export async function AccountRegistration({ role }: AccountRegistrationProps) {
+export async function AccountRegistration({ role , connected}: AccountRegistrationProps) {
     const cities = await getCities();
     const categories = await getCategories();
 
@@ -53,7 +56,11 @@ export async function AccountRegistration({ role }: AccountRegistrationProps) {
                         />
                     </div>
 
-                    {role === "client" ? <RegisterClientForm cities={cities} /> : <RegisterShopkeeperForm cities={cities} categories={categories} />}
+                    {role === "client" ? 
+                        (connected ? <AddClientForm cities={cities}/>: <RegisterClientForm cities={cities} /> )
+                        :
+                         (connected ? <AddShopkeeperForm cities={cities} categories={categories}/>:
+                            <RegisterShopkeeperForm cities={cities} categories={categories} />)}
                 </CardContent>
 
                 <CardFooter className="justify-center text-xs text-muted-foreground">

@@ -3,6 +3,7 @@ const http = require("node:http");
 const port = Number(process.env.PORT ?? 4100);
 let numberOfTestRequestSinceBeginning = 0;
 let currentMessage = "Message de test depuis la base";
+const categories = [{ categoryId: "000001", name: "Café" }];
 
 const shops = [
     { shopId: "00000000-0000-0000-0000-00000000000a", name: "Boulangerie Dupont", siret: "12345678900013", address: { road: "rue de la République", number: "12" }, status: "WAITING" },
@@ -21,6 +22,12 @@ function sendPayload(res) {
 }
 
 const server = http.createServer((req, res) => {
+    if (req.url === "/api/catalogue/categories" && req.method === "GET") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(categories));
+        return;
+    }
+
     if (req.url === "/api/catalogue/test" && req.method === "GET") {
         numberOfTestRequestSinceBeginning += 1;
         sendPayload(res);
