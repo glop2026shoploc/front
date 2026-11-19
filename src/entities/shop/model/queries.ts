@@ -2,7 +2,7 @@ import { apiConfig } from "@/shared/config/api";
 import type { OpeningHours, Shop } from "./types";
 
 export async function getWaitingShops(): Promise<Shop[]> {
-    const response = await fetch(`${apiConfig.catalogue}/api/catalogue/shops/admin/waiting`);
+    const response = await fetch(`${apiConfig.catalogue}/shops/admin/waiting`);
 
     if (!response.ok) {
         throw new Error(`Erreur lors de la récupération des commerces en attente ${response.status}`);
@@ -12,7 +12,7 @@ export async function getWaitingShops(): Promise<Shop[]> {
 }
 
 export async function getShopDocumentUrls(shopId: string): Promise<string[]> {
-    const response = await fetch(`${apiConfig.catalogue}/api/catalogue/shops/admin/${shopId}/documents`);
+    const response = await fetch(`${apiConfig.catalogue}/shops/admin/${shopId}/documents`);
 
     if (!response.ok) {
         throw new Error(`Erreur lors de la récupération des pièces justificatives ${response.status}`);
@@ -22,7 +22,7 @@ export async function getShopDocumentUrls(shopId: string): Promise<string[]> {
 }
 
 export async function updateShopStatus(shopId: string, status: "VALIDATED" | "REJECTED"): Promise<void> {
-    const response = await fetch(`${apiConfig.catalogue}/api/catalogue/shops/admin/${shopId}/status?status=${status}`, {
+    const response = await fetch(`${apiConfig.catalogue}/shops/admin/${shopId}/status?status=${status}`, {
         method: "PATCH",
     });
 

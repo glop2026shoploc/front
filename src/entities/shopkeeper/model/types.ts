@@ -1,3 +1,5 @@
+import { Credentials } from "@/entities/user";
+
 export interface ShopkeeperRegistration {
     firstName: string;
     lastName: string;
@@ -11,17 +13,16 @@ export interface ShopkeeperRegistration {
     dataUsageConsent: boolean;
 }
 
-export interface ShopkeeperInfo {
-    shopkeeperId: number;
+export interface AddShopKeeper {
     companyName: string;
-    category: string;
+    categoryId: string;
     siret: string;
     address: string;
-    postalCode: string;
-    city: string;
-    email: string;
-    status: "WAITING" | "VALIDATED" | "REJECTED";
+    cityId: string;
 }
+
+
+export type ShopKeeperLogin = Credentials;
 
 export interface TokenResponse {
     type: string;
