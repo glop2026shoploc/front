@@ -12,7 +12,7 @@ const euros = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR
 
 export async function ShopDetails({ shopId }: { shopId: string }) {
     const shop = await getShop(shopId);
-    if (shop === null || shop.status !== "VALIDATED") {
+    if (shop === null) {
         notFound();
     }
 

@@ -1,5 +1,6 @@
 import { apiConfig } from "@/shared/config/api";
 import type { OpeningHours, Shop } from "./types";
+import { apiFetch } from "@/shared/api/fetch";
 
 export async function getWaitingShops(): Promise<Shop[]> {
     const response = await fetch(`${apiConfig.catalogue}/shops/admin/waiting`);
@@ -32,7 +33,7 @@ export async function updateShopStatus(shopId: string, status: "VALIDATED" | "RE
 }
 
 export async function getShop(shopId: string): Promise<Shop | null> {
-    const response = await fetch(`${apiConfig.catalogue}/shops/${shopId}`);
+    const response = await apiFetch(`${apiConfig.catalogue}/shops/${shopId}`);
 
     if (response.status === 404) {
         return null;
@@ -45,7 +46,7 @@ export async function getShop(shopId: string): Promise<Shop | null> {
 }
 
 export async function getShopOpeningHours(shopId: string): Promise<OpeningHours[]> {
-    const response = await fetch(`${apiConfig.catalogue}/shops/${shopId}/opening-hours`);
+    const response = await apiFetch(`${apiConfig.catalogue}/shops/${shopId}/opening-hours`);
 
     if (!response.ok) {
         throw new Error(`Erreur lors de la récupération des horaires ${response.status}`);
