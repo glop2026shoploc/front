@@ -17,6 +17,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/artists" className="font-semibold">
             {siteConfig.name}
           </Link>
+          <Link href="/commercants" className="ml-6 text-sm underline">
+            Commerçants
+          </Link>
+          <Link href="/inscription" className="ml-auto text-sm underline">
+            Créer un compte
+          </Link>
         </div>
       </header>
       <main>{children}</main>
