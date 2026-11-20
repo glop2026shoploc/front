@@ -4,11 +4,13 @@ export class CommercantsPage {
     readonly categorySelect: Locator;
     readonly cards: Locator;
     readonly emptyMessage: Locator;
+    readonly pendingShopName: Locator;
 
     constructor(private readonly page: Page) {
         this.categorySelect = page.getByLabel("Catégorie");
         this.cards = page.getByRole("listitem");
         this.emptyMessage = page.getByRole("status");
+        this.pendingShopName = page.getByText("Shop en attente");
     }
 
     async goto() {
@@ -16,6 +18,10 @@ export class CommercantsPage {
     }
 
     async filterBy(category: string) {
-        await this.categorySelect.selectOption(category);
+        if (category === "Toutes") {
+            await this.categorySelect.selectOption("");
+        } else {
+            await this.categorySelect.selectOption({ label: category });
+        }
     }
 }

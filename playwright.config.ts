@@ -25,7 +25,7 @@ export default defineConfig({
         },
         {
             command: "node e2e/mocks/shopkeepers-server.js",
-            url: "http://localhost:4102/api/catalogue/shopkeepers",
+            url: "http://localhost:4102/api/catalogue/categories",
             reuseExistingServer: !process.env.CI,
         },
         {

@@ -1,13 +1,18 @@
-export interface Commercant {
-    id: string;
+export interface CategorieCommercant {
+    categoryId: string;
     name: string;
-    category: string;
-    address: string;
 }
 
-export const categoriesCommercants = [
-    "Boulangerie",
-    "Presse",
-    "Vêtements",
-    "Alimentation",
-] as const;
+export interface AdresseCommercant {
+    road: string;
+    number?: string | null;
+    complement?: string | null;
+}
+
+export interface Commercant {
+    shopId: string;
+    name: string;
+    category: CategorieCommercant;
+    address: AdresseCommercant;
+    status: "WAITING" | "VALIDATED" | "REJECTED";
+}

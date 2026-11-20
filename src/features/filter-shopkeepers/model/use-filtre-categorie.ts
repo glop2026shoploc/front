@@ -1,15 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import type { Commercant } from "@/entities/commercant";
+import { getCommercants, type Commercant } from "@/entities/commercant";
 
-export function useFiltreCategorie(commercants: Commercant[]) {
-    const [categorie, setCategorie] = useState("Toutes");
+export function useFiltreCategorie(commercantsInitiaux: Commercant[]) {
+    const [categorieId, setCategorieId] = useState("");
+    const [commercants, setCommercants] = useState(commercantsInitiaux);
+    const [erreur, setErreur] = useState("");
 
-    let resultats = commercants;
-    if (categorie !== "Toutes") {
-        resultats = commercants.filter((commercant) => commercant.category === categorie);
+    async function filtrerParCategorie(id: string) {
+        setCategorieId(id);
+        setErreur("");
+
+        try {
+            setCommercants(await getCommercants(id || undefined));
+        } catch {
+            setErreur("Impossible de charger les commerçants.");
+            setCommercants([]);
+        }
     }
 
-    return { categorie, setCategorie, resultats };
+    return { categorieId, filtrerParCategorie, commercants, erreur };
 }

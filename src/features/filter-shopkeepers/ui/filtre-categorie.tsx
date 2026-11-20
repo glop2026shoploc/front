@@ -1,13 +1,14 @@
 "use client";
 
-import { categoriesCommercants } from "@/entities/commercant";
+import type { CategorieCommercant } from "@/entities/commercant";
 
 interface FiltreCategorieProps {
     value: string;
-    onChange: (categorie: string) => void;
+    categories: CategorieCommercant[];
+    onChange: (categoryId: string) => void;
 }
 
-export function FiltreCategorie({ value, onChange }: FiltreCategorieProps) {
+export function FiltreCategorie({ value, categories, onChange }: FiltreCategorieProps) {
     return (
         <label className="flex max-w-sm flex-col gap-2 text-sm font-medium">
             Catégorie
@@ -16,9 +17,9 @@ export function FiltreCategorie({ value, onChange }: FiltreCategorieProps) {
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
             >
-                <option value="Toutes">Toutes les catégories</option>
-                {categoriesCommercants.map((categorie) => (
-                    <option key={categorie} value={categorie}>{categorie}</option>
+                <option value="">Toutes les catégories</option>
+                {categories.map((categorie) => (
+                    <option key={categorie.categoryId} value={categorie.categoryId}>{categorie.name}</option>
                 ))}
             </select>
         </label>
