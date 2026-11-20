@@ -6,6 +6,7 @@ import { getCategories } from "@/entities/category";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/ui/table";
+import { ShopOpenStatus } from "./shop-open-status";
 
 const days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
 const euros = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" });
@@ -41,7 +42,10 @@ export async function ShopDetails({ shopId }: { shopId: string }) {
             <div className="grid gap-6 md:grid-cols-2">
                 <Card className="[--card-spacing:--spacing(6)]">
                     <CardHeader>
-                        <CardTitle className="text-lg">Horaires</CardTitle>
+                        <CardTitle className="flex items-center gap-2 text-lg">
+                            Horaires
+                            {openingHours.length > 0 && <ShopOpenStatus openingHours={openingHours} />}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
                         {openingHours.length === 0 ? (

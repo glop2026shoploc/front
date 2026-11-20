@@ -19,3 +19,17 @@ test("affiche une page 404 pour un commerce en attente de validation", async ({ 
 
     await expect(shopDetailsPage.text("This page could not be found.")).toBeVisible();
 });
+
+test("affiche le commerce ouvert pendant ses horaires", async ({ page, shopDetailsPage }) => {
+    await page.clock.setFixedTime(new Date(2026, 10, 23, 10, 0));
+    await shopDetailsPage.goto(SHOP_ID);
+
+    await expect(shopDetailsPage.openStatus()).toHaveText("Ouvert");
+});
+
+test("affiche le commerce fermé en dehors de ses horaires", async ({ page, shopDetailsPage }) => {
+    await page.clock.setFixedTime(new Date(2026, 10, 23, 13, 0));
+    await shopDetailsPage.goto(SHOP_ID);
+
+    await expect(shopDetailsPage.openStatus()).toHaveText("Fermé");
+});

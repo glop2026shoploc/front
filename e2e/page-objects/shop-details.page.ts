@@ -14,4 +14,8 @@ export class ShopDetailsPage {
     row(name: string) {
         return this.page.getByRole("row").filter({ hasText: name });
     }
+
+    openStatus() {
+        return this.page.locator('[data-slot="card-title"]', { hasText: "Horaires" }).locator('[data-slot="badge"]');
+    }
 }
