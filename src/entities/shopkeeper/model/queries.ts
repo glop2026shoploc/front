@@ -1,5 +1,5 @@
 import { apiConfig } from "@/shared/config/api";
-import type { TokenResponse, ShopkeeperRegistration, AddShopKeeper } from "./types";
+import type { TokenResponse, ShopkeeperRegistration, AddShopKeeper, ShopLocation } from "./types";
 import {readProblemMessage} from "@/shared/api/problem-detail";
 import { apiFetch } from "@/shared/api/fetch";
 import { getSession } from "@/entities/user";
@@ -18,10 +18,7 @@ export async function registerShopkeeper(shopkeeper: ShopkeeperRegistration): Pr
             companyName: shopkeeper.companyName,
             categoryId: shopkeeper.categoryId,
             siret: shopkeeper.siret,
-            address: {
-                road: shopkeeper.address,
-                cityId: shopkeeper.cityId,
-            },
+            address: toAddressPayload(shopkeeper.address, shopkeeper.location, shopkeeper.cityId),
     }});
 
     if (!response.ok) {
@@ -63,4 +60,20 @@ export async function uploadShopkeeperDocument(shopId: string, file: File): Prom
     if (!response.ok) {
         throw new Error(`Erreur lors de l'envoi du justificatif ${response.status}`);
     }
+}
+
+/**
+ * Adresse envoyée au service users
+ */
+function toAddressPayload(address: string, location: ShopLocation | null, cityId: string) {
+    if (!location) {
+        return { road: address, cityId };
+    }
+    return {
+        road: location.road,
+        number: location.number,
+        cityId,
+        latitude: location.latitude,
+        longitude: location.longitude,
+    };
 }

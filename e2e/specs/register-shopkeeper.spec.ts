@@ -53,3 +53,22 @@ test("affiche une erreur quand les pièces justificatives dépassent 4 Mo", asyn
 
     await expect(registerShopkeeperPage.message("ne doivent pas dépasser 4 Mo")).toBeVisible();
 });
+
+test("propose les adresses de l'IGN et localise le commerce choisi", async ({ registerShopkeeperPage }) => {
+    await registerShopkeeperPage.mockAddressApi({
+        label: "50 Boulevard Jean-Baptiste Lebas 59000 Lille",
+        housenumber: "50",
+        street: "Boulevard Jean-Baptiste Lebas",
+        city: "Lille",
+        longitude: 3.068259,
+        latitude: 50.625771,
+    });
+    await registerShopkeeperPage.goto();
+
+    await registerShopkeeperPage.chooseAddressSuggestion("50 boulevard jean", "50 Boulevard Jean-Baptiste Lebas 59000 Lille");
+
+    await expect(registerShopkeeperPage.addressInput).toHaveValue("50 Boulevard Jean-Baptiste Lebas 59000 Lille");
+    await expect(registerShopkeeperPage.addressLocatedHint).toBeVisible();
+    // La ville de l'adresse est présélectionnée
+    await expect(registerShopkeeperPage.citySelect).toContainText("Lille");
+});

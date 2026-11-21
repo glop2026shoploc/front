@@ -4,6 +4,7 @@ import {RegisterShopkeeperPage} from "../page-objects/register-shopkeeper.page";
 import {RegisterClientPage} from "../page-objects/register-client.page";
 import {AdminShopsPage} from "../page-objects/admin-shops.page";
 import {ShopDetailsPage} from "../page-objects/shop-details.page";
+import { ShopsPage } from "../page-objects/shops.page";
 
 type Fixtures = {
     catalogueTestPage: CatalogueTestPage;
@@ -11,11 +12,14 @@ type Fixtures = {
     registerClientPage: RegisterClientPage;
     adminShopsPage: AdminShopsPage;
     shopDetailsPage: ShopDetailsPage;
+    shopsPage: ShopsPage;
 };
 
 export const test = base.extend<Fixtures>({
     page: async ({ page }, use) => {
         await page.route("https://picsum.photos/**", (route) => route.abort());
+        // Pas d'appel réel à l'API d'adresses de l'IGN : un test qui en a besoin simule sa réponse.
+        await page.route("https://data.geopf.fr/**", (route) => route.abort());
         await use(page);
     },
     catalogueTestPage: async ({ page }, use) => use(new CatalogueTestPage(page)),
@@ -23,6 +27,7 @@ export const test = base.extend<Fixtures>({
     registerClientPage: async ({ page }, use) => use(new RegisterClientPage(page)),
     adminShopsPage: async ({ page }, use) => use(new AdminShopsPage(page)),
     shopDetailsPage: async ({ page }, use) => use(new ShopDetailsPage(page)),
+    shopsPage: async ({ page }, use) => use(new ShopsPage(page)),
 });
 
 export { expect };
