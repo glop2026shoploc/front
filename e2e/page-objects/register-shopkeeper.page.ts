@@ -25,6 +25,7 @@ export class RegisterShopkeeperPage {
     readonly consentCheckbox: Locator;
     readonly submitButton: Locator;
     readonly successAlert: Locator;
+    readonly addressLocatedHint: Locator;
 
     constructor(private readonly page: Page) {
         this.firstNameInput = page.getByLabel("Prénom", { exact: true });
@@ -39,6 +40,7 @@ export class RegisterShopkeeperPage {
         this.consentCheckbox = page.getByRole("checkbox");
         this.submitButton = page.getByRole("button", { name: "S'inscrire" });
         this.successAlert = page.getByText("Inscription envoyée");
+        this.addressLocatedHint = page.getByText("Adresse localisée", { exact: false });
     }
 
     async goto() {
@@ -74,5 +76,28 @@ export class RegisterShopkeeperPage {
 
     message(text: string) {
         return this.page.getByText(text);
+    }
+
+    /** Simule la réponse de l'API d'adresses de l'IGN (Géoplateforme) avec une seule adresse. */
+    async mockAddressApi(address: { label: string; housenumber: string; street: string; city: string; longitude: number; latitude: number }) {
+        await this.page.route("https://data.geopf.fr/geocodage/search?**", (route) =>
+            route.fulfill({
+                json: {
+                    type: "FeatureCollection",
+                    features: [
+                        {
+                            type: "Feature",
+                            geometry: { type: "Point", coordinates: [address.longitude, address.latitude] },
+                            properties: { ...address, name: `${address.housenumber} ${address.street}`, postcode: "59000" },
+                        },
+                    ],
+                },
+            })
+        );
+    }
+
+    async chooseAddressSuggestion(text: string, suggestion: string) {
+        await this.addressInput.fill(text);
+        await this.page.getByRole("option", { name: suggestion }).click();
     }
 }

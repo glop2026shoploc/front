@@ -33,5 +33,5 @@ export async function clientLoginAction (client: ClientLogin):Promise<LoginClien
             message: error instanceof Error ? error.message : "Une erreur est survenue.",
         };
     }
-    redirect(routes.home);
+    redirect(routes.shops);
 }
