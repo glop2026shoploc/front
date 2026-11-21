@@ -17,7 +17,8 @@ export async function registerClient(client: ClientRegistration): Promise<void> 
                 dataUsageConsent: client.dataUsageConsent,
             },
             cityId: client.cityId,
-        },
+        }, 
+        requireAuth: false
     });
 
     if (!response.ok) {

@@ -5,7 +5,10 @@ const ID = "00000000-0000-0000-0000-000000000101";
 const port = Number(process.env.PORT ?? 4101);
 const takenEmail = "deja.inscrit@example.com";
 
-const cities = [{ id: ID, name: "Lille" }];
+const cities = [
+    { id: ID, name: "Ville Imaginaire" },
+    { id: "00000000-0000-0000-0000-000000000102", name: "Lille" },
+];
 
 function sendJson(res, status, payload) {
     res.writeHead(status, { "Content-Type": "application/json" });

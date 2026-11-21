@@ -3,9 +3,31 @@ const http = require("node:http");
 const port = Number(process.env.PORT ?? 4100);
 let numberOfTestRequestSinceBeginning = 0;
 let currentMessage = "Message de test depuis la base";
-const categories = [{ categoryId: "000001", name: "Café" }];
+const LILLE_ID = "00000000-0000-0000-0000-000000000102";
+const categories = [
+    { categoryId: "000001", name: "Café" },
+    { categoryId: "000002", name: "Boulangerie" },
+    { categoryId: "000003", name: "Librairie" },
+];
+
+function shop(id, name, categoryId, number, road, latitude, longitude) {
+    return {
+        shopId: id,
+        name,
+        siret: "10000000000011",
+        categoryIds: [categoryId],
+        address: { addressId: id, road, number, complement: null, cityId: LILLE_ID, latitude, longitude },
+        status: "VALIDATED",
+    };
+}
 
 const shops = [
+    shop("401", "Au Bon Pain", "000002", "12", "rue de la République", 50.631, 3.061),
+    shop("403", "Librairie des Tilleuls", "000003", "45", "avenue des Tilleuls", 50.638, 3.07),
+    shop("404", "La Fournée du Moulin", "000002", "8", "rue du Moulin", null, null),
+];
+
+const waitingShops = [
     { shopId: "00000000-0000-0000-0000-00000000000a", name: "Boulangerie Dupont", siret: "12345678900013", address: { road: "rue de la République", number: "12" }, status: "WAITING" },
     { shopId: "00000000-0000-0000-0000-00000000000b", name: "Fleuriste Martin", siret: "12345678900021", address: { road: "rue Nationale", number: "3" }, status: "WAITING" },
 ];
@@ -22,6 +44,15 @@ function sendPayload(res) {
 }
 
 const server = http.createServer((req, res) => {
+    const url = new URL(req.url, `http://localhost:${port}`);
+
+    if (url.pathname === "/api/catalogue/shops" && req.method === "GET") {
+        const cityId = url.searchParams.get("cityId");
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify(shops.filter((candidate) => candidate.address.cityId === cityId)));
+        return;
+    }
+
     if (req.url === "/api/catalogue/categories" && req.method === "GET") {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify(categories));
@@ -53,11 +84,11 @@ const server = http.createServer((req, res) => {
 
     if (req.url === "/api/catalogue/shops/admin/waiting" && req.method === "GET") {
         res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(shops.filter((shop) => shop.status === "WAITING")));
+        res.end(JSON.stringify(waitingShops.filter((shop) => shop.status === "WAITING")));
         return;
     }
 
-    const shop = shops.find((s) => req.url.startsWith(`/api/catalogue/shops/admin/${s.shopId}/`));
+    const shop = waitingShops.find((s) => req.url.startsWith(`/api/catalogue/shops/admin/${s.shopId}/`));
     if (shop && req.url.endsWith("/documents") && req.method === "GET") {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify([`http://localhost:4100/files/${shop.shopId}/kbis.pdf`]));
