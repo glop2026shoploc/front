@@ -72,22 +72,15 @@ export default async function CommercantsPage() {
             <p className="text-sm text-muted-foreground" role="status">
                 {shops.length} commerçant{shops.length > 1 ? "s" : ""} à {cityName}
             </p>
-            {shops.length === 0 ? (
-                <Alert>
-                    <AlertTitle>Aucun commerçant trouvé</AlertTitle>
-                    <AlertDescription>Aucun commerçant partenaire dans votre ville pour le moment.</AlertDescription>
-                </Alert>
-            ) : (
-                <ShopList
-                    items={shops.map((shop) => ({
-                        shop,
-                        cityName,
-                        categoryNames: shop.categoryIds
-                            .map((id) => categoryNameById.get(id))
-                            .filter((name): name is string => name !== undefined),
-                    }))}
-                />
-            )}
+            <ShopList
+                categories={categories}
+                items={shops.map((shop) => ({
+                    shop,
+                    cityName,
+                    categoryNames: [categoryNameById.get(shop.category.categoryId)]
+                        .filter((name): name is string => name !== undefined),
+                }))}
+            />
         </Layout>
     );
 }

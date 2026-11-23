@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { LocateFixed } from "lucide-react";
 import type { Shop } from "@/entities/shop/model/types";
-import { ShopCard } from "@/entities/shop/ui/shop-card";
+import { ShopCard } from "@/entities/shop/ui";
+import type { Category } from "@/entities/category";
 import { distanceKm, type Coordinates } from "@/shared/lib/geo";
 import { Button } from "@/shared/ui/button";
+import { ShopCategoryFilter, useFiltreShops } from "@/features/filter-shopkeepers";
 
 export interface ShopListItem {
     shop: Shop;
@@ -30,8 +32,12 @@ const POSITION_ERRORS = {
  * affiche la distance de chaque commerce depuis sa position et trie du plus proche au plus lointain.
  * La position n'est utilisée que dans le navigateur : elle n'est ni envoyée ni enregistrée.
  */
-export function ShopList({ items }: { items: ShopListItem[] }) {
+export function ShopList({ items, categories }: { items: ShopListItem[]; categories: Category[] }) {
     const [state, setState] = useState<PositionState>({ status: "idle" });
+    const { categoryId, setCategoryId, filteredShops } = useFiltreShops(items.map((item) => item.shop));
+
+    const filteredShopIds = new Set(filteredShops.map((shop) => shop.shopId));
+    const filteredItems = items.filter((item) => filteredShopIds.has(item.shop.shopId));
 
     function requestPosition() {
         if (!("geolocation" in navigator)) {
@@ -49,7 +55,7 @@ export function ShopList({ items }: { items: ShopListItem[] }) {
     }
 
     const position = state.status === "granted" ? state.position : undefined;
-    const located = items.map((item) => {
+    const located = filteredItems.map((item) => {
         const { latitude, longitude } = item.shop.address;
         const distanceFromMeKm =
             position && latitude !== null && longitude !== null
@@ -64,6 +70,12 @@ export function ShopList({ items }: { items: ShopListItem[] }) {
 
     return (
         <div className="flex flex-col gap-4">
+            <ShopCategoryFilter value={categoryId} categories={categories} onChange={setCategoryId} />
+            {sorted.length === 0 && (
+                <p role="status" className="text-sm text-muted-foreground">
+                    Aucun commerçant trouvé
+                </p>
+            )}
             <div className="flex flex-col gap-2 rounded-lg border p-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-sm text-muted-foreground">
                     {position

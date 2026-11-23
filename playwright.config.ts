@@ -24,21 +24,17 @@ export default defineConfig({
             env: { PORT: "4103" },
         },
         {
-            command: "node e2e/mocks/shopkeepers-server.js",
-            url: "http://localhost:4102/api/catalogue/categories",
-            reuseExistingServer: !process.env.CI,
-        },
-        {
             command: "node e2e/mocks/users-server.js",
             url: "http://localhost:4101/",
             reuseExistingServer: !process.env.CI,
+            env: { PORT: "4101" },
         },
         {
             command: process.env.CI ? "npm run build && npm run start" : "npm run dev",
             url: "http://localhost:3000",
             reuseExistingServer: !process.env.CI,
             env: {
-                CATALOGUE_API_URL: "http://localhost:4100/api/catalogue",
+                CATALOGUE_API_URL: "http://localhost:4103/api/catalogue",
                 USERS_API_URL: "http://localhost:4101/api/users",
             },
         },
