@@ -13,7 +13,7 @@ export interface Shop {
     shopId: string;
     name: string;
     siret: string;
-    categoryIds: string[];
+    category: { categoryId: string; name?: string };
     address: ShopAddress;
     status: "WAITING" | "VALIDATED" | "REJECTED";
 }
