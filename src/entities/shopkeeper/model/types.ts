@@ -1,17 +1,40 @@
-export interface ShopkeeperRegistration {
-    companyName: string;
-    category: string;
-    siret: string;
-    address: string;
-    email: string;
-    password: string;
+import { Credentials } from "@/entities/user";
+
+/** Adresse choisie dans l'autocomplétion : normalisée et géolocalisée. */
+export interface ShopLocation {
+    number: string | null;
+    road: string;
+    latitude: number;
+    longitude: number;
 }
 
-export interface ShopkeeperInfo {
+export interface ShopkeeperRegistration {
+    firstName: string;
+    lastName: string;
     companyName: string;
-    category: string;
+    categoryId: string;
     siret: string;
     address: string;
+    /** Renseigné quand une suggestion est choisie */
+    location: ShopLocation | null;
+    cityId: string;
     email: string;
-    status: "WAITING" | "VALIDATED" | "REJECTED";
+    password: string;
+    dataUsageConsent: boolean;
+}
+
+export interface AddShopKeeper {
+    companyName: string;
+    categoryId: string;
+    siret: string;
+    address: string;
+    cityId: string;
+}
+
+
+export type ShopKeeperLogin = Credentials;
+
+export interface TokenResponse {
+    type: string;
+    token: string;
 }

@@ -29,7 +29,7 @@ export default defineConfig({
             reuseExistingServer: !process.env.CI,
         },
         {
-            command: "node e2e/mocks/shopkeeper-server.js",
+            command: "node e2e/mocks/users-server.js",
             url: "http://localhost:4101/",
             reuseExistingServer: !process.env.CI,
         },
@@ -38,9 +38,8 @@ export default defineConfig({
             url: "http://localhost:3000",
             reuseExistingServer: !process.env.CI,
             env: {
-                NEXT_PUBLIC_GATEWAY_URL: "http://localhost:4102",
-                CATALOGUE_API_URL: "http://localhost:4103",
-                USERS_API_URL: "http://localhost:4101",
+                CATALOGUE_API_URL: "http://localhost:4100/api/catalogue",
+                USERS_API_URL: "http://localhost:4101/api/users",
             },
         },
     ],

@@ -1,35 +1,60 @@
 import { test, expect } from "../fixtures";
+import type { ShopkeeperFormData } from "../page-objects/register-shopkeeper.page";
 
-const EMAIL = "moncommercant@example.com";
+const shopkeeper: ShopkeeperFormData = {
+    firstName: "Marie",
+    lastName: "Dupont",
+    companyName: "MonCommercant",
+    address: "12 rue de la République",
+    city: "Lille",
+    category: "Café",
+    siret: "12345678900013",
+    email: "nouveau.commercant@example.com",
+    password: "AStrongPassword123!",
+};
 
-test("affiche un message de confirmation après une inscription valide", async ({ registerShopkeeperPage }) => {
+test("affiche la confirmation après une inscription valide", async ({ registerShopkeeperPage }) => {
     await registerShopkeeperPage.goto();
-    await registerShopkeeperPage.fill({
-        companyName: "MonCommercant",
-        category: "Alimentation",
-        siret: `${Date.now()}`.padStart(14, "0"),
-        address: "12 rue de la Republique, 59000 Lille",
-        email: `shopkeeper-${Date.now()}@test.fr`,
-        password: "AStrongPassword123!",
-    });
-
+    await registerShopkeeperPage.fill(shopkeeper);
+    await registerShopkeeperPage.acceptConsent();
     await registerShopkeeperPage.submit();
 
     await expect(registerShopkeeperPage.successAlert).toBeVisible();
 });
 
-test("affiche une erreur quand l'e-mail est déjà utilisé", async ({ registerShopkeeperPage }) => {
+test("affiche le message du backend quand l'e-mail est déjà utilisé", async ({ registerShopkeeperPage }) => {
     await registerShopkeeperPage.goto();
-    await registerShopkeeperPage.fill({
-        companyName: "MonCommercant",
-        category: "Alimentation",
-        siret: "12345678900013",
-        address: "12 rue de la Republique, 59000 Lille",
-        email: EMAIL,
-        password: "AStrongPassword123!",
-    });
-
+    await registerShopkeeperPage.fill({ ...shopkeeper, email: "deja.inscrit@example.com" });
+    await registerShopkeeperPage.acceptConsent();
     await registerShopkeeperPage.submit();
 
-    await expect(registerShopkeeperPage.errorAlert).toBeVisible();
+    await expect(registerShopkeeperPage.message("Un compte existe déjà avec cet e-mail.")).toBeVisible();
+});
+
+test("refuse l'inscription sans consentement", async ({ registerShopkeeperPage }) => {
+    await registerShopkeeperPage.goto();
+    await registerShopkeeperPage.fill(shopkeeper);
+    await registerShopkeeperPage.submit();
+
+    await expect(
+        registerShopkeeperPage.message("Vous devez accepter l'utilisation de vos données personnelles pour créer un compte.")
+    ).toBeVisible();
+});
+test("propose les adresses de l'IGN et localise le commerce choisi", async ({ registerShopkeeperPage }) => {
+    await registerShopkeeperPage.mockAddressApi({
+        label: "50 Boulevard Jean-Baptiste Lebas 59000 Lille",
+        housenumber: "50",
+        street: "Boulevard Jean-Baptiste Lebas",
+        city: "Lille",
+        longitude: 3.068259,
+        latitude: 50.625771,
+    });
+    await registerShopkeeperPage.goto();
+
+    await registerShopkeeperPage.chooseAddressSuggestion("50 boulevard jean", "50 Boulevard Jean-Baptiste Lebas 59000 Lille");
+
+    await expect(registerShopkeeperPage.addressInput).toHaveValue("50 Boulevard Jean-Baptiste Lebas 59000 Lille");
+    await expect(registerShopkeeperPage.addressLocatedHint).toBeVisible();
+    // La ville de l'adresse est présélectionnée
+    await expect(registerShopkeeperPage.citySelect).toContainText("Lille");
 });

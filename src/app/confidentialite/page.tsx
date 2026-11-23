@@ -15,7 +15,7 @@ export default function ConditionsUtilisationPage() {
           </h1>
 
           <p className="mt-4 text-sm text-gray-500">
-            Dernière mise à jour : 24 octobre 2026
+            Dernière mise à jour : 18 novembre 2026
           </p>
 
           <p className="mt-5 leading-7 text-gray-600">
@@ -136,6 +136,27 @@ export default function ConditionsUtilisationPage() {
             </h2>
             <p className="leading-7 text-gray-600">
               La marque Shopping Local, les logos, interfaces, chartes graphiques et développements logiciels associés sont la propriété exclusive de la société Shopping Local SAS. Toute reproduction ou exploitation non autorisée est strictement interdite.
+            </p>
+            <p className="mt-3 leading-7 text-gray-600">
+              Les adresses proposées lors de l’inscription d’un commerce, et leurs coordonnées géographiques, proviennent de la{" "}
+              <a
+                href="https://adresse.data.gouv.fr/"
+                target="_blank"
+                rel="noreferrer"
+                className="font-medium text-blue-600 underline underline-offset-4 hover:text-blue-800"
+              >
+                Base Adresse Nationale
+              </a>
+              , diffusée par l’IGN via la Géoplateforme sous{" "}
+              <a
+                href="https://www.etalab.gouv.fr/licence-ouverte-open-licence/"
+                target="_blank"
+                rel="noreferrer"
+                className="font-medium text-blue-600 underline underline-offset-4 hover:text-blue-800"
+              >
+                Licence Ouverte / Open Licence 2.0
+              </a>
+              . Les itinéraires vers les commerçants s’ouvrent dans Google Maps, un service tiers soumis à ses propres conditions.
             </p>
           </section>
 
