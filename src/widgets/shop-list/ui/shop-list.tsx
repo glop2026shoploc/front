@@ -4,6 +4,7 @@ import { useState } from "react";
 import { LocateFixed } from "lucide-react";
 import type { Shop } from "@/entities/shop/model/types";
 import { ShopCard } from "@/entities/shop/ui/shop-card";
+import { updateFavoriteShopAction } from "@/features/update-favorite-shop";
 import { distanceKm, type Coordinates } from "@/shared/lib/geo";
 import { Button } from "@/shared/ui/button";
 
@@ -94,6 +95,8 @@ export function ShopList({ items }: { items: ShopListItem[] }) {
                         cityName={cityName}
                         distanceFromMeKm={distanceFromMeKm}
                         categoryNames={categoryNames}
+                        isFavorite={shop.favorite}
+                        onClickFavorite={() => updateFavoriteShopAction(shop.shopId, !shop.favorite)}
                     />
                 ))}
             </div>
