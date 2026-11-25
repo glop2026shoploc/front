@@ -16,4 +16,5 @@ export interface Shop {
     categoryIds: string[];
     address: ShopAddress;
     status: "WAITING" | "VALIDATED" | "REJECTED";
+    favorite: boolean;
 }
